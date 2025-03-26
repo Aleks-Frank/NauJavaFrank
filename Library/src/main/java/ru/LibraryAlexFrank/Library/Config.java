@@ -44,6 +44,7 @@ public class Config {
     @Autowired
     private BookDBRepository bookDBRepository;
 
+    @Bean
     public CommandLineRunner commandScanner(){
         return args -> {
             try (Scanner scanner = new Scanner(System.in)){

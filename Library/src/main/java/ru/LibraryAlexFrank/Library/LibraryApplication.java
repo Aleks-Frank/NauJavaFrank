@@ -9,9 +9,11 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class LibraryApplication {
 
 	public static void main(String[] args) throws Exception {
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
-		CommandLineRunner commandLineRunner = context.getBean(CommandLineRunner.class);
-		commandLineRunner.run(args);
+//		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+//		CommandLineRunner commandLineRunner = context.getBean(CommandLineRunner.class);
+//		commandLineRunner.run(args);
+
+		SpringApplication.run(LibraryApplication.class, args);
 	}
 
 }
