@@ -1,63 +1,58 @@
-package ru.LibraryAlexFrank.Library.Entity;
+package ru.LibraryAlexFrank.Library.entity;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
-
 @Entity
-@Table(name="book_tbl")
+@Table(name="tbl_book")
 public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idBook;
 
-    private String bookName;
+    private String name;
 
-    private String bookAuthor;
+    @OneToOne
+    private Author author;
+
+    private String namePublication;
 
     private int bookYear;
 
-    private String bookComment;
-
-    private Boolean isBookInLibrary = true;
-
-    private String bookNameBusy = null;
-
-    private LocalDate bookFinalDataBusy = null;
+    private String bookDescription;
 
     public Book() {
     }
 
-    public Book(String bookName, String bookAuthor, int bookYear, String bookComment) {
-        this.bookName = bookName;
-        this.bookAuthor = bookAuthor;
+    public Book(String bookName, Author author, int bookYear, String namePublication) {
+        this.name = bookName;
+        this.author = author;
         this.bookYear = bookYear;
-        this.bookComment = bookComment;
+        this.namePublication = namePublication;
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdBook() {
+        return idBook;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdBook(Long idBook) {
+        this.idBook = idBook;
     }
 
-    public String getBookName() {
-        return bookName;
+    public String getName() {
+        return name;
     }
 
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getBookAuthor() {
-        return bookAuthor;
+    public Author getBookAuthor() {
+        return author;
     }
 
-    public void setBookAuthor(String bookAuthor) {
-        this.bookAuthor = bookAuthor;
+    public void setBookAuthor(Author bookAuthor) {
+        this.author = bookAuthor;
     }
 
     public int getBookYear() {
@@ -69,48 +64,21 @@ public class Book {
     }
 
     public String getBookComment() {
-        return bookComment;
+        return namePublication;
     }
 
     public void setBookComment(String bookComment) {
-        this.bookComment = bookComment;
-    }
-
-    public Boolean getBookInLibrary() {
-        return isBookInLibrary;
-    }
-
-    public void setBookInLibrary(Boolean bookInLibrary) {
-        isBookInLibrary = bookInLibrary;
-    }
-
-    public String getBookNameBusy() {
-        return bookNameBusy;
-    }
-
-    public void setBookNameBusy(String bookNameBusy) {
-        this.bookNameBusy = bookNameBusy;
-    }
-
-    public LocalDate getBookFinalDataBusy() {
-        return bookFinalDataBusy;
-    }
-
-    public void setBookFinalDataBusy(LocalDate bookFinalDataBusy) {
-        this.bookFinalDataBusy = bookFinalDataBusy;
+        this.namePublication = bookComment;
     }
 
     @Override
     public String toString() {
         return "Book{" +
-                "id=" + id +
-                ", bookName='" + bookName + '\'' +
-                ", bookAuthor='" + bookAuthor + '\'' +
+                "id=" + idBook +
+                ", bookName='" + name + '\'' +
+                ", bookAuthor='" + author + '\'' +
                 ", bookYear=" + bookYear +
-                ", bookComment='" + bookComment + '\'' +
-                ", isBookInLibrary=" + isBookInLibrary +
-                ", bookNameBusy='" + bookNameBusy + '\'' +
-                ", bookFinalDataBusy=" + bookFinalDataBusy +
+                ", bookComment='" + namePublication + '\'' +
                 '}';
     }
 }

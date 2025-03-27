@@ -1,25 +1,16 @@
-package ru.LibraryAlexFrank.Library.Repository;
+package ru.LibraryAlexFrank.Library.repository;
 
-import ru.LibraryAlexFrank.Library.Entity.Book;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import ru.LibraryAlexFrank.Library.entity.Book;
 
-import java.util.Optional;
+import java.util.List;
 
-public interface BookRepository {
+public interface BookRepository extends CrudRepository<Book, Long> {
 
-    void createNewBook(Book book);
+    List<Book> findByBookName(String name);
 
-    Optional<Book> findBookById(Long id);
-
-    Optional<Book> findBookByNameBook(String name);
-
-    void bookBorrow(Long id, Boolean statusBook);
-
-    Book updateBook(Long id, Book book);
-
-    String nameBusyBook(Long id);
-
-    void deleteBook(Long id);
-
-    void showAll();
+    @Query("FROM Book WHERE author.name = :name")
+    List<Book> findByAuthorName(String name);
 
 }

@@ -1,80 +1,47 @@
-package ru.LibraryAlexFrank.Library.Repository;
+package ru.LibraryAlexFrank.Library.repository;
 
+import jakarta.persistence.Access;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import ru.LibraryAlexFrank.Library.Entity.Book;
+import ru.LibraryAlexFrank.Library.entity.Author;
+import ru.LibraryAlexFrank.Library.entity.Book;
 
 import java.util.List;
-import java.util.Optional;
 
-@Component
-public class BookRepositoryIMPL implements BookRepository{
+public class BookRepositoryImpl implements BookRepositoryCustom{
 
-    private final List<Book> bookList;
+    private final EntityManager entityManager;
 
     @Autowired
-    public BookRepositoryIMPL(List<Book> bookList) {
-        this.bookList = bookList;
-    }
-
-
-    @Override
-    public void createNewBook(Book book) {
-        bookList.add(book);
+    public BookRepositoryImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     @Override
-    public Optional<Book> findBookById(Long id) {
-        return bookList.stream()
-                .filter(t -> t.getId().equals(id))
-                .findFirst();
+    public List<Book> findByBookName(String name) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Book> criteriaQuery = criteriaBuilder.createQuery(Book.class);
+
+        Root<Book> bookRoot = criteriaQuery.from(Book.class);
+        Predicate predicate = criteriaBuilder.equal(bookRoot.get("name"), name);
+
+        criteriaQuery.select(bookRoot).where(predicate);
+
+        return entityManager.createQuery(criteriaQuery).getResultList();
     }
 
     @Override
-    public Optional<Book> findBookByNameBook(String name) {
-        return bookList.stream()
-                .filter(t -> t.getBookAuthor().equals(name))
-                .findAny();
-    }
+    public List<Book> findByAuthorName(String name) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Book> criteriaQuery = criteriaBuilder.createQuery(Book.class);
 
-    @Override
-    public void bookBorrow(Long id, Boolean statusBook) {
-        findBookById(id).ifPresent(updateBookInfo -> updateBookInfo.setBookInLibrary(statusBook));
-    }
+        Root<Book> bookRoot = criteriaQuery.from(Book.class);
+        Join<Book, Author> author = bookRoot.join("author", JoinType.INNER);
+        Predicate predicate = criteriaBuilder.equal(author.get("name"), name);
 
-    @Override
-    public Book updateBook(Long id, Book book) {
-        Book updateBookInfo = findBookById(id).orElse(null);
-        if(updateBookInfo != null){
-            updateBookInfo.setBookName(book.getBookName());
-            updateBookInfo.setBookAuthor(book.getBookAuthor());
-            updateBookInfo.setBookYear(book.getBookYear());
-            updateBookInfo.setBookComment(book.getBookComment());
-            updateBookInfo.setBookInLibrary(book.getBookInLibrary());
-            updateBookInfo.setBookNameBusy(book.getBookNameBusy());
-            updateBookInfo.setBookFinalDataBusy(book.getBookFinalDataBusy());
-        }
-        return updateBookInfo;
-    }
+        criteriaQuery.select(bookRoot).where(predicate);
 
-    @Override
-    public String nameBusyBook(Long id) {
-        Book bookInfo = findBookById(id).orElse(null);
-        if(bookInfo != null){
-            return bookInfo.getBookNameBusy();
-        }
-        return null;
-    }
-
-    @Override
-    public void deleteBook(Long id) {
-        findBookById(id).ifPresent(bookList::remove);
-    }
-
-    @Override
-    public void showAll() {
-        for(Book book : bookList){
-            System.out.println(book.toString());
-        }
+        return entityManager.createQuery(criteriaQuery).getResultList();
     }
 }
