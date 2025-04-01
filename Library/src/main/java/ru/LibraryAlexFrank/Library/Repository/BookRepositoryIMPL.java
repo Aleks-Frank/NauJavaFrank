@@ -9,12 +9,12 @@ import ru.LibraryAlexFrank.Library.entity.Book;
 
 import java.util.List;
 
-public class BookRepositoryImpl implements BookRepositoryCustom{
+public class BookRepositoryIMPL implements BookRepositoryCustom{
 
     private final EntityManager entityManager;
 
     @Autowired
-    public BookRepositoryImpl(EntityManager entityManager) {
+    public BookRepositoryIMPL(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
