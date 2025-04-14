@@ -1,7 +1,13 @@
 package ru.AlexFrank.LibraryWeb.entity;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name="tbl_author")
 public class Author {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAuthor;
 
     private String name;
@@ -53,10 +59,6 @@ public class Author {
 
     @Override
     public String toString() {
-        return "Author{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", patronymic='" + patronymic + '\'' +
-                '}';
+        return name + ' ' +  surname + ' ' + patronymic;
     }
 }

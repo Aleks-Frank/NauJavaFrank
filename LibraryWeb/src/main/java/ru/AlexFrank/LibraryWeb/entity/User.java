@@ -1,7 +1,13 @@
 package ru.AlexFrank.LibraryWeb.entity;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name="tbl_user")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUser;
 
     private String nameUser;

@@ -1,12 +1,21 @@
 package ru.AlexFrank.LibraryWeb.entity;
 
+import jakarta.persistence.*;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Entity
+@Table(name="tbl_book")
 public class Book {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idBook;
 
     private String name;
 
-    private String author;
+    @ManyToOne
+    private Author author;
 
     private String namePublication;
 
@@ -15,7 +24,8 @@ public class Book {
     public Book() {
     }
 
-    public Book(String bookName, String author, int bookYear, String namePublication) {
+    public Book(String bookName, Author author, int bookYear, String namePublication) {
+        log.info("Создан объект" + bookName + " " + author + " " + bookYear + " " + namePublication + " " + idBook);
         this.name = bookName;
         this.author = author;
         this.bookYear = bookYear;
@@ -38,11 +48,11 @@ public class Book {
         this.name = name;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 

@@ -1,15 +1,13 @@
-package ru.AlexFrank.LibraryWeb.repository;
+package ru.AlexFrank.LibraryWeb.repository.old;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.AlexFrank.LibraryWeb.entity.Author;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public class AuthorRepositoryIMPL implements AuthorRepository{
+public class AuthorRepositoryIMPL implements AuthorRepository {
 
     private final List<Author> authors;
 

@@ -11,9 +11,9 @@ public interface LibraryService {
 
     Optional<Book> findBookById(Long id);
 
-    Optional<Book> findBookByNameBook(String name);
+//    Optional<Book> findBookByNameBook(String name);
 
-    Book updateBook(Long id, Book book);
+    Book updateBook(Book book);
 
     void deleteBook(Long id);
 
