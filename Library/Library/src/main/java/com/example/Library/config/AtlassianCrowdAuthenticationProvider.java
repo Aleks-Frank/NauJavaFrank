@@ -18,7 +18,7 @@ import java.util.List;
 public class AtlassianCrowdAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws

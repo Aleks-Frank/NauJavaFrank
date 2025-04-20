@@ -41,6 +41,10 @@ public class UserService implements UserDetailsService {
         userRepositoryDB.save(user);
     }
 
+    public void saveUser(UserEntity user){
+        userRepositoryDB.save(user);
+    }
+
     private String preparePassword(String password) {
         return password;
     }
