@@ -23,17 +23,22 @@ import java.util.stream.Collectors;
 @Component
 public class MyInMemoryUserDetailService implements UserDetailsService {
 
+    private boolean initialized = false;
+
     @Autowired
     private UserService userService;
 
-//    @PostConstruct
-//    public void init()
-//    {
-//        UserEntity user = new UserEntity("user", "123", Set.of(ROLE.USER));
-//        userService.saveUser(user);
-//        UserEntity admin = new UserEntity("admin", "admin", Set.of(ROLE.ADMIN));
-//        userService.saveUser(admin);
-//    }
+    @PostConstruct
+    public void init()
+    {
+        if(!initialized) {
+            UserEntity user = new UserEntity("user", "123", Set.of(ROLE.USER));
+            userService.saveUser(user);
+            UserEntity admin = new UserEntity("admin", "admin", Set.of(ROLE.ADMIN));
+            userService.saveUser(admin);
+            initialized = true;
+        }
+    }
 
 
     @Override

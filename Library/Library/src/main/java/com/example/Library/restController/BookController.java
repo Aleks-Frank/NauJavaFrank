@@ -47,7 +47,7 @@ public class BookController {
     @PostMapping("/book/create")
     public String createBook(@ModelAttribute Book book){
         libraryService.createNewBook(book);
-        return "redirect:/";
+        return "redirect:/book";
     }
 
     @GetMapping("/book/edit/{id}")
@@ -57,19 +57,19 @@ public class BookController {
             model.addAttribute("book", book.get());
             return "edit";
         }
-        return "redirect:/";
+        return "redirect:/book";
     }
 
     @PostMapping("/book/edit")
     public String editBook(@ModelAttribute Book book){
         libraryService.updateBook(book);
-        return "redirect:/";
+        return "redirect:/book";
     }
 
     @GetMapping("/book/delete/{id}")
     public String deleteBook(@PathVariable Long id){
         libraryService.deleteBook(id);
-        return "redirect:/";
+        return "redirect:/book";
     }
 
     @GetMapping("/register")
